@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import "./App.css";
 
+
+
 export default function StartScreen({ onStart }) {
   const [size, setSize] = useState(8);
   const [mode, setMode] = useState("manual");
 
   return (
     <div className="start-screen">
+  <div className="start-card">
+    <div>
       <h1>Select Board Size</h1>
       <input
         type="number"
         min="4"
-        max="20"
+        max="8"
         value={size}
         onChange={(e) => setSize(Number(e.target.value))}
       />
@@ -24,6 +28,8 @@ export default function StartScreen({ onStart }) {
           Auto Solve
         </button>
       </div>
+    </div>
+    </div>
     </div>
   );
 }

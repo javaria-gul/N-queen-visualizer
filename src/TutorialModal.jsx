@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./App.css"; // 👈 ensure CSS is imported
+import "./App.css";
 
 const steps = [
   "Welcome to the N-Queens Puzzle!",
@@ -16,8 +16,12 @@ export default function TutorialModal({ onClose }) {
     if (stepIndex < steps.length - 1) {
       setStepIndex(stepIndex + 1);
     } else {
-      onClose();
+      onClose(true); // ✅ Only start game if tutorial finished
     }
+  };
+
+  const handleCancel = () => {
+    onClose(false); // ✅ Just close modal, don't start game
   };
 
   return (
@@ -25,9 +29,15 @@ export default function TutorialModal({ onClose }) {
       <div className="modal">
         <h2 className="modal-title">📘 Tutorial</h2>
         <p className="modal-step">{steps[stepIndex]}</p>
-        <button onClick={nextStep} className="modal-button">
-          {stepIndex === steps.length - 1 ? "Start Playing" : "Next"}
-        </button>
+
+        <div className="modal-buttons">
+          <button onClick={nextStep} className="modal-button">
+            {stepIndex === steps.length - 1 ? "Start Playing" : "Next"}
+          </button>
+          <button onClick={handleCancel} className="modal-button cancel-button">
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   );

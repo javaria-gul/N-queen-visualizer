@@ -2,23 +2,24 @@ import React, { useState } from "react";
 import "./App.css";
 
 function isInvalidCell(row, col, queens) {
-    for (const q of queens) {
-      const qRow = q.row;
-      const qCol = q.col;
-  
-      if (
-        qRow === row ||                // same row
-        qCol === col ||                // same column
-        Math.abs(qRow - row) === Math.abs(qCol - col) // diagonal
-      ) {
-        return true;
-      }
-    }
-    return false;
-  }
-  
+  for (const q of queens) {
+    const qRow = q.row;
+    const qCol = q.col;
 
-export default function Board({ size }) {
+    if (
+      qRow === row ||                // same row
+      qCol === col ||                // same column
+      Math.abs(qRow - row) === Math.abs(qCol - col) // diagonal
+    ) {
+      return true;
+    }
+  }
+  return false;
+}
+
+
+export default function Board({ size, onSwitchToAuto }) {
+
   const [queens, setQueens] = useState([]);
   const [history, setHistory] = useState([]); // for tracking last move
 
@@ -66,20 +67,12 @@ export default function Board({ size }) {
           : `Place Queens 👑 (${queens.length}/${size})`}
       </h2>
 
-      <button
-        onClick={resetBoard}
-        style={{
-          padding: "8px 16px",
-          marginBottom: "1rem",
-          border: "none",
-          backgroundColor: "#e74c3c",
-          color: "white",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-      >
-        🔁 Reset Board
-      </button>
+      <div className="reset-container">
+        <button className="reset-btn" onClick={resetBoard}>🔁 Reset Board</button>
+        <button className="auto-btn" onClick={onSwitchToAuto}>⚡ Auto Solve</button>
+      </div>
+
+
 
       <div
         className="board"
@@ -94,31 +87,33 @@ export default function Board({ size }) {
             const isQueen = isQueenHere(row, col);
             const invalid = isInvalidCell(row, col, queens);
             const isLast = isLastQueen(row, col);
+            
 
             return (
               <div
                 key={`${row}-${col}`}
-                className={`cell ${isBlack ? "black" : "white"}`}
+                className={`cell ${isBlack ? "black" : "white"} ${isQueen ? "queen" : ""}`}
                 style={{
                   backgroundColor: isQueen
-                    ? "#f39c12"
+                    ? undefined
                     : invalid
-                    ? "#e74c3c"
-                    : isBlack
-                    ? "#333"
-                    : "#fff",
+                      ? "rgba(194, 18, 18, 0.493)"
+                      
+                      : undefined,
                   cursor: isLast || (!isQueen && !invalid) ? "pointer" : "default",
                 }}
                 onClick={() =>
                   isLast || (!isQueen && !invalid) ? handleClick(row, col) : null
                 }
               >
-                {isQueen ? "👑" : ""}
+
+                {isQueen && <div className="queen-symbol" />}
+
               </div>
             );
           })
         )}
       </div>
-    </div>
+    </div >
   );
 }

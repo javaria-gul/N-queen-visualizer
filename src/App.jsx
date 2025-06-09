@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import StartScreen from "./StartScreen";
 import TutorialModal from "./TutorialModal";
-import Board from "./board.jsx";
+import Board from "./Board";
+import AutoSolver from "./AutoSolver";
 import "./App.css";
 
 function App() {
@@ -20,24 +21,28 @@ function App() {
     }
   };
 
-  const handleTutorialClose = () => {
+  const handleTutorialClose = (startGame) => {
     setShowTutorial(false);
-    setStarted(true);
+    if (startGame) {
+      setStarted(true);
+    }
   };
+  
 
   return (
     <>
       {!started ? (
         <StartScreen onStart={handleStart} />
       ) : (
-        <div className="app">
+        <div className="app-container">
           <h1 className="title">
             N-Queens ({size}x{size}) - Mode: {mode}
           </h1>
-          {mode === "manual" && <Board size={size} />}
+          {mode === "manual" && <Board size={size} onSwitchToAuto={() => setMode("auto")} />}
+
+          {mode === "auto" && <AutoSolver size={size} />}
         </div>
       )}
-
       {showTutorial && <TutorialModal onClose={handleTutorialClose} />}
     </>
   );
