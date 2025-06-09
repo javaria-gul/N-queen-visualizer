@@ -72,7 +72,7 @@ export default function Board({ size, onSwitchToAuto }) {
         <button className="auto-btn" onClick={onSwitchToAuto}>⚡ Auto Solve</button>
         <button 
           className="back-btn" 
-          onClick={() => window.location.reload()}  // या आप एक prop callback भी use कर सकते हैं
+          onClick={() => window.location.reload()} 
         >
           ↩ Back to Start
         </button>
