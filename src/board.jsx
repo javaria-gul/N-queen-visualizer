@@ -79,7 +79,7 @@ export default function Board({ size, onSwitchToAuto }) {
       </div>
 
 
-
+      <div className="board-wrapper">
       <div
         className="board"
         style={{
@@ -87,6 +87,7 @@ export default function Board({ size, onSwitchToAuto }) {
           gridTemplateRows: `repeat(${size}, 50px)`,
         }}
       >
+
         {[...Array(size)].map((_, row) =>
           [...Array(size)].map((_, col) => {
             const isBlack = (row + col) % 2 === 1;
@@ -119,6 +120,7 @@ export default function Board({ size, onSwitchToAuto }) {
             );
           })
         )}
+      </div>
       </div>
     </div >
   );
