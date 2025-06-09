@@ -70,6 +70,12 @@ export default function Board({ size, onSwitchToAuto }) {
       <div className="reset-container">
         <button className="reset-btn" onClick={resetBoard}>🔁 Reset Board</button>
         <button className="auto-btn" onClick={onSwitchToAuto}>⚡ Auto Solve</button>
+        <button 
+          className="back-btn" 
+          onClick={() => window.location.reload()}  // या आप एक prop callback भी use कर सकते हैं
+        >
+          ↩ Back to Start
+        </button>
       </div>
 
 

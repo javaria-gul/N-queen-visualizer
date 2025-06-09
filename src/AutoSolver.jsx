@@ -156,6 +156,10 @@ const NQueensVisualizer = ({ size }) => {
           <button onClick={solveAll} disabled={running} className="solve-btn">
             ▶ Start Solving
           </button>
+          <button className="back-btn" onClick={() => window.location.reload()}>
+          ↩ Back to Start
+        </button>
+      
          
         </div>
         <div
