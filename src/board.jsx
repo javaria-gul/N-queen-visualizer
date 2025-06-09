@@ -70,9 +70,9 @@ export default function Board({ size, onSwitchToAuto }) {
       <div className="reset-container">
         <button className="reset-btn" onClick={resetBoard}>🔁 Reset Board</button>
         <button className="auto-btn" onClick={onSwitchToAuto}>⚡ Auto Solve</button>
-        <button 
-          className="back-btn" 
-          onClick={() => window.location.reload()} 
+        <button
+          className="back-btn"
+          onClick={() => window.location.reload()}
         >
           ↩ Back to Start
         </button>
@@ -80,47 +80,48 @@ export default function Board({ size, onSwitchToAuto }) {
 
 
       <div className="board-wrapper">
-      <div
-        className="board"
-        style={{
-          gridTemplateColumns: `repeat(${size}, 50px)`,
-          gridTemplateRows: `repeat(${size}, 50px)`,
-        }}
-      >
+        <div
+          className="board"
+          style={{
+            '--board-size': size,
+            gridTemplateColumns: `repeat(${size}, 1fr)`,
+            gridTemplateRows: `repeat(${size}, 1fr)`
+          }}
+        >
 
-        {[...Array(size)].map((_, row) =>
-          [...Array(size)].map((_, col) => {
-            const isBlack = (row + col) % 2 === 1;
-            const isQueen = isQueenHere(row, col);
-            const invalid = isInvalidCell(row, col, queens);
-            const isLast = isLastQueen(row, col);
-            
+          {[...Array(size)].map((_, row) =>
+            [...Array(size)].map((_, col) => {
+              const isBlack = (row + col) % 2 === 1;
+              const isQueen = isQueenHere(row, col);
+              const invalid = isInvalidCell(row, col, queens);
+              const isLast = isLastQueen(row, col);
 
-            return (
-              <div
-                key={`${row}-${col}`}
-                className={`cell ${isBlack ? "black" : "white"} ${isQueen ? "queen" : ""}`}
-                style={{
-                  backgroundColor: isQueen
-                    ? undefined
-                    : invalid
-                      ? "rgba(194, 18, 18, 0.493)"
-                      
-                      : undefined,
-                  cursor: isLast || (!isQueen && !invalid) ? "pointer" : "default",
-                }}
-                onClick={() =>
-                  isLast || (!isQueen && !invalid) ? handleClick(row, col) : null
-                }
-              >
 
-                {isQueen && <div className="queen-symbol" />}
+              return (
+                <div
+                  key={`${row}-${col}`}
+                  className={`cell ${isBlack ? "black" : "white"} ${isQueen ? "queen" : ""}`}
+                  style={{
+                    backgroundColor: isQueen
+                      ? undefined
+                      : invalid
+                        ? "rgba(194, 18, 18, 0.493)"
 
-              </div>
-            );
-          })
-        )}
-      </div>
+                        : undefined,
+                    cursor: isLast || (!isQueen && !invalid) ? "pointer" : "default",
+                  }}
+                  onClick={() =>
+                    isLast || (!isQueen && !invalid) ? handleClick(row, col) : null
+                  }
+                >
+
+                  {isQueen && <div className="queen-symbol" />}
+
+                </div>
+              );
+            })
+          )}
+        </div>
       </div>
     </div >
   );
