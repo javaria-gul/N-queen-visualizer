@@ -74,22 +74,22 @@ const NQueensVisualizer = ({ size }) => {
   };
 
   const delay = (ms) =>
-  new Promise((resolve) => {
-    let elapsed = 0;
-    const interval = 50; // ms
+    new Promise((resolve) => {
+      let elapsed = 0;
+      const interval = 50; // ms
 
-    function wait() {
-      if (!paused) {
-        elapsed += interval;
+      function wait() {
+        if (!paused) {
+          elapsed += interval;
+        }
+        if (elapsed >= ms) {
+          resolve();
+        } else {
+          setTimeout(wait, interval);
+        }
       }
-      if (elapsed >= ms) {
-        resolve();
-      } else {
-        setTimeout(wait, interval);
-      }
-    }
-    wait();
-  });
+      wait();
+    });
 
 
   const isValid = (b, r, c) => {
@@ -157,18 +157,20 @@ const NQueensVisualizer = ({ size }) => {
             ▶ Start Solving
           </button>
           <button className="back-btn" onClick={() => window.location.reload()}>
-          ↩ Back to Start
-        </button>
-      
-         
+            ↩ Back to Start
+          </button>
+
+
         </div>
         <div
           className="board"
           style={{
-            gridTemplateColumns: `repeat(${size}, 50px)`,
-            gridTemplateRows: `repeat(${size}, 50px)`
+            '--board-size': size,
+            gridTemplateColumns: `repeat(${size}, 1fr)`,
+            gridTemplateRows: `repeat(${size}, 1fr)`
           }}
         >
+
           {[...Array(size)].map((_, row) =>
             [...Array(size)].map((_, col) => {
               const isBlack = (row + col) % 2 === 1;
@@ -206,9 +208,8 @@ const NQueensVisualizer = ({ size }) => {
             {codeSnippets[language].map((line, idx) => (
               <div
                 key={idx}
-                className={`code-line ${
-                  highlightLine === idx ? "highlight" : ""
-                }`}
+                className={`code-line ${highlightLine === idx ? "highlight" : ""
+                  }`}
               >
                 {line}
               </div>
