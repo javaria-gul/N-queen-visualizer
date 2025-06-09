@@ -73,14 +73,24 @@ const NQueensVisualizer = ({ size }) => {
     ]
   };
 
-  const delay = (ms) => new Promise((res) => {
-    const interval = setInterval(() => {
+  const delay = (ms) =>
+  new Promise((resolve) => {
+    let elapsed = 0;
+    const interval = 50; // ms
+
+    function wait() {
       if (!paused) {
-        clearInterval(interval);
-        res();
+        elapsed += interval;
       }
-    }, ms / 2);
+      if (elapsed >= ms) {
+        resolve();
+      } else {
+        setTimeout(wait, interval);
+      }
+    }
+    wait();
   });
+
 
   const isValid = (b, r, c) => {
     for (let i = 0; i < r; i++) {
@@ -146,13 +156,7 @@ const NQueensVisualizer = ({ size }) => {
           <button onClick={solveAll} disabled={running} className="solve-btn">
             ▶ Start Solving
           </button>
-          <button
-            onClick={() => setPaused((p) => !p)}
-            disabled={!running}
-            className="solve-btn"
-          >
-            {paused ? "▶️ Resume" : "⏸ Pause"}
-          </button>
+         
         </div>
         <div
           className="board"

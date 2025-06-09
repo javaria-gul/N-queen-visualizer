@@ -1,9 +1,12 @@
 {
   "name": "n-queens-visualizer",
+  "homepage": "https://javaria-gul.github.io/N-queen-visualizer",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
@@ -24,7 +27,6 @@
     "eslint-plugin-react-refresh": "^0.4.19",
     "globals": "^16.0.0",
     "init": "^0.1.2",
-    
     "postcss": "^8.5.4",
     "tailwindcss": "^4.1.8",
     "vite": "^6.3.5"
