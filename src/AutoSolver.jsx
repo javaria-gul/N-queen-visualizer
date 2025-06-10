@@ -2,13 +2,13 @@ import React, { useState } from "react";
 import "./App.css";
 import queenImg from "./assets/queen.png";
 
-const NQueensVisualizer = ({ size }) => {
-  const [board, setBoard] = useState(Array.from({ length: size }, () => null));
+const NQueensVisualizer = ({ size = 8 }) => {
+  const [board, setBoard] = useState(Array(size).fill(null));
   const [log, setLog] = useState([]);
   const [running, setRunning] = useState(false);
   const [paused, setPaused] = useState(false);
   const [highlightLine, setHighlightLine] = useState(null);
-  const [showPanel, setShowPanel] = useState(false);
+  const [showMobilePanel, setShowMobilePanel] = useState(false);
   const [language, setLanguage] = useState("python");
 
   const codeSnippets = {
@@ -46,51 +46,10 @@ const NQueensVisualizer = ({ size }) => {
       "    }",
       "  }",
       "}"
-    ],
-    c: [
-      "void solve(int row) {",
-      "  if (row == N) { print(); return; }",
-      "  for (int col = 0; col < N; col++) {",
-      "    if (isValid(row, col)) {",
-      "      board[row] = col;",
-      "      solve(row + 1);",
-      "      board[row] = -1;",
-      "    }",
-      "  }",
-      "}"
-    ],
-    csharp: [
-      "void Solve(int row) {",
-      "  if (row == N) { Print(); return; }",
-      "  for (int col = 0; col < N; col++) {",
-      "    if (IsValid(row, col)) {",
-      "      board[row] = col;",
-      "      Solve(row + 1);",
-      "      board[row] = -1;",
-      "    }",
-      "  }",
-      "}"
     ]
   };
 
-  const delay = (ms) =>
-    new Promise((resolve) => {
-      let elapsed = 0;
-      const interval = 50; // ms
-
-      function wait() {
-        if (!paused) {
-          elapsed += interval;
-        }
-        if (elapsed >= ms) {
-          resolve();
-        } else {
-          setTimeout(wait, interval);
-        }
-      }
-      wait();
-    });
-
+  const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
   const isValid = (b, r, c) => {
     for (let i = 0; i < r; i++) {
@@ -100,56 +59,60 @@ const NQueensVisualizer = ({ size }) => {
     return true;
   };
 
-  const solveAll = () => {
-    const result = [];
+  const solveAll = async () => {
+    setRunning(true);
+    setLog([]);
+    setBoard(Array(size).fill(null));
 
     const backtrack = async (r, b) => {
       if (r === size) {
-        result.push([...b]);
         setBoard([...b]);
         setRunning(false);
-        setHighlightLine(null);
-        return true; // stop after first solution
+        return true;
       }
 
       for (let c = 0; c < size; c++) {
         setHighlightLine(5);
         await delay(600);
+
         if (isValid(b, r, c)) {
           setHighlightLine(6);
-          await delay(600);
           const newBoard = [...b];
           newBoard[r] = c;
-          setBoard([...newBoard]);
-          setLog((prev) => [`Placed queen at row ${r + 1}, col ${c + 1}`, ...prev]);
+          setBoard(newBoard);
+          setLog(prev => [`Placed queen at row ${r + 1}, col ${c + 1}`, ...prev]);
+
           setHighlightLine(7);
-          await delay(600);
           const found = await backtrack(r + 1, newBoard);
           if (found) return true;
+
           setHighlightLine(8);
           newBoard[r] = null;
-          setBoard([...newBoard]);
-          setLog((prev) => [`Backtracked from row ${r + 1}, col ${c + 1}`, ...prev]);
+          setBoard(newBoard);
+          setLog(prev => [`Backtracked from row ${r + 1}, col ${c + 1}`, ...prev]);
           await delay(100);
         }
       }
       return false;
     };
 
-    (async () => {
-      setRunning(true);
-      setLog([]);
-      const emptyBoard = Array.from({ length: size }, () => null);
-      setBoard(emptyBoard);
-      await backtrack(0, [...emptyBoard]);
-    })();
+    await backtrack(0, Array(size).fill(null));
   };
 
   return (
-    <div className="visualizer-container full-height">
-      <div className="hamburger" onClick={() => setShowPanel(!showPanel)}>
-        ☰
-      </div>
+    <div className="visualizer-container">
+
+      {!showMobilePanel && (
+        <div className="hamburger" onClick={() => setShowMobilePanel(true)}>☰</div>
+      )}
+
+
+      {showMobilePanel && (
+        <div className="right-panel-mobile">
+          <button className="close-btn" onClick={() => setShowMobilePanel(false)}>×</button>
+          {/* ... rest of mobile panel content ... */}
+        </div>
+      )}
 
       <div className="left-panel">
         <div className="solver-controls">
@@ -159,72 +122,95 @@ const NQueensVisualizer = ({ size }) => {
           <button className="back-btn" onClick={() => window.location.reload()}>
             ↩ Back to Start
           </button>
-
-
         </div>
-        <div
-          className="board"
-          style={{
-            '--board-size': size,
-            gridTemplateColumns: `repeat(${size}, 1fr)`,
-            gridTemplateRows: `repeat(${size}, 1fr)`
-          }}
-        >
 
-          {[...Array(size)].map((_, row) =>
-            [...Array(size)].map((_, col) => {
-              const isBlack = (row + col) % 2 === 1;
-              const hasQueen = board[row] === col;
-              return (
-                <div
-                  key={`${row}-${col}`}
-                  className={`cell ${isBlack ? "black" : "white"}`}
-                >
-                  {hasQueen && (
-                    <img src={queenImg} className="queen-symbol" alt="queen" />
-                  )}
-                </div>
-              );
-            })
+        <div className="board" style={{
+          gridTemplateColumns: `repeat(${size}, 1fr)`,
+          gridTemplateRows: `repeat(${size}, 1fr)`
+        }}>
+          {Array(size).fill().map((_, row) =>
+            Array(size).fill().map((_, col) => (
+              <div key={`${row}-${col}`} className={`cell ${(row + col) % 2 ? "black" : "white"}`}>
+                {board[row] === col && <img src={queenImg} className="queen-symbol" alt="queen" />}
+              </div>
+            ))
           )}
         </div>
       </div>
 
-      <div className={`right-panel ${showPanel ? "show" : ""}`}>
-        <div className="code-box">
-          <h3 className="panel-title">Code ({language.toUpperCase()})</h3>
-          <select
-            value={language}
-            onChange={(e) => setLanguage(e.target.value)}
-            className="language-selector"
-          >
-            {Object.keys(codeSnippets).map((lang) => (
-              <option key={lang} value={lang}>
-                {lang.toUpperCase()}
-              </option>
-            ))}
-          </select>
-          <pre>
-            {codeSnippets[language].map((line, idx) => (
-              <div
-                key={idx}
-                className={`code-line ${highlightLine === idx ? "highlight" : ""
-                  }`}
+      <div className="right-panel">
+        <div className="right-panel-content">
+          <div className="code-box">
+            <div className="code-header">
+              <span>Code ({language.toUpperCase()})</span>
+              <select
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+                className="language-selector"
               >
-                {line}
-              </div>
-            ))}
-          </pre>
-        </div>
-        <div className="log-box">
-          <h3 className="panel-title">Backtracking Log</h3>
-          <ul>
-            {log.map((entry, index) => (
-              <li key={index}>{entry}</li>
-            ))}
-          </ul>
+                {Object.keys(codeSnippets).map(lang => (
+                  <option key={lang} value={lang}>{lang.toUpperCase()}</option>
+                ))}
+              </select>
+            </div>
+            <div className="code-content">
+              {codeSnippets[language].map((line, idx) => (
+                <div
+                  key={idx}
+                  className={`code-line ${highlightLine === idx ? "highlight" : ""}`}
+                >
+                  {line}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="log-box">
+            <div className="log-header">Backtracking Log</div>
+            <div className="log-content">
+              {log.map((entry, i) => <div key={i} className="log-entry">{entry}</div>)}
+            </div>
+          </div>
         </div>
       </div>
+
+      {showMobilePanel && (
+        <div className="right-panel-mobile">
+          <div className="mobile-panel-content">
+            <button className="close-btn" onClick={() => setShowMobilePanel(false)}>×</button>
+            <div className="code-box">
+              <div className="code-header">
+                <span>Code ({language.toUpperCase()})</span>
+                <select
+                  value={language}
+                  onChange={(e) => setLanguage(e.target.value)}
+                  className="language-selector"
+                >
+                  {Object.keys(codeSnippets).map(lang => (
+                    <option key={lang} value={lang}>{lang.toUpperCase()}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="code-content">
+                {codeSnippets[language].map((line, idx) => (
+                  <div
+                    key={idx}
+                    className={`code-line ${highlightLine === idx ? "highlight" : ""}`}
+                  >
+                    {line}
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="log-box">
+              <div className="log-header">Backtracking Log</div>
+              <div className="log-content">
+                {log.map((entry, i) => <div key={i} className="log-entry">{entry}</div>)}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

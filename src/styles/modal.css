@@ -1,0 +1,96 @@
+/* modal.css */
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 1rem;
+  }
+  
+  .modal {
+    background-color: #222;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 0 15px #0ff, 0 0 25px #f0f;
+    max-width: 400px;
+    width: 100%;
+    color: #0ff;
+    text-align: center;
+    font-size: 1rem;
+  }
+  
+  .modal-title {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+  
+  .modal-step {
+    margin-bottom: 1.5rem;
+  }
+  
+  .modal-button {
+    background-color: #0ff;
+    color: #111;
+    border: none;
+    border-radius: 8px;
+    padding: 0.7rem 1.5rem;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+  
+  .modal-button:hover {
+    background-color: #08c;
+  }
+  
+  .modal-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .cancel-button {
+    background-color: #f0f;
+    color: #fff;
+  }
+  
+  .cancel-button:hover {
+    background-color: #f0f;
+  }
+  
+  button.back-btn {
+    padding: 16px 16px;
+    margin-top: 12px;
+    margin-bottom: 12px;
+    border: none;
+    background-color: #f0f;
+    color: #111;
+    font-weight: bold;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0 0 5px #f0f;
+    transition: background-color 0.3s;
+  }
+  
+  button.back-btn:hover {
+    background-color: rgb(0, 255, 149);
+    color: white;
+  }
+
+  .start-card, .modal {
+    width: 95%;
+    max-width: 500px;
+    box-sizing: border-box;
+    margin: 1rem;
+}
+
+.start-card input[type="number"] {
+    width: 80%;
+}
+  

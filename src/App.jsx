@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import StartScreen from "./StartScreen";
 import TutorialModal from "./TutorialModal";
-import Board from "./Board";
+import Board from "./board";
 import AutoSolver from "./AutoSolver";
 import "./App.css";
 
@@ -35,9 +35,7 @@ function App() {
         <StartScreen onStart={handleStart} />
       ) : (
         <div className="app-container">
-          <h1 className="title">
-            N-Queens ({size}x{size}) - Mode: {mode}
-          </h1>
+          
           {mode === "manual" && <Board size={size} onSwitchToAuto={() => setMode("auto")} />}
 
           {mode === "auto" && <AutoSolver size={size} />}
@@ -49,3 +47,6 @@ function App() {
 }
 
 export default App;
+//<h1 className="title">
+//N-Queens ({size}x{size}) - Mode: {mode}
+//</h1> on line 38 

@@ -1,0 +1,37 @@
+/* reset.css */
+
+/* Base Reset */
+* {
+    box-sizing: border-box;
+  }
+  
+  body, html, #root {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #111; /* dark background to highlight glowing */
+    color: #eee;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+  }
+  
+  #root {
+    display: flex;
+    flex-direction: column;
+    height: 90vh; /* Change from min-height to height */
+    width: 90vw; /* Add this for full viewport width */
+    min-width: 320px;
+    padding: 0; /* Change from 1rem to 0 for true full-screen */
+}
+  
+  .reset-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+    gap: 12px;
+  }
+  

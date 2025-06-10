@@ -1,0 +1,175 @@
+/* ==================== */
+/* BOARD CONTAINER      */
+/* ==================== */
+.app-container {
+  background-color: #222;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 0 10px #0ff, 0 0 15px #f0f;
+  width: 95vw;
+  min-height: 95vh;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: auto; /* Changed from hidden to auto */
+  margin: 20px auto;
+}
+
+.board-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.board-wrapper {
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 1/1;
+}
+
+.board {
+  display: grid;
+  gap: 2px;
+  border: 2px solid #0ff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px #0ff inset;
+  user-select: none;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1/1;
+}
+
+/* ==================== */
+/* CELLS & QUEENS       */
+/* ==================== */
+.cell {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.cell.white {
+  background-color: #ddd;
+  color: #111;
+}
+
+.cell.black {
+  background-color: #555;
+  color: #eee;
+}
+
+.queen-symbol {
+  width: 70%;
+  height: 70%;
+  background-image: url('/assets/queen.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 0 4px rgb(0, 0, 0));
+}
+
+/* ==================== */
+/* BUTTON STYLES        */
+/* ==================== */
+button {
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  font-size: 1rem;
+}
+
+.reset-container {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  max-width: 600px;
+  padding: 0 1rem;
+  margin: 0 auto 1rem;
+  flex-wrap: wrap;
+}
+
+.reset-btn {
+  background-color: #0ff;
+  color: #111;
+  box-shadow: 0 0 5px #0ff;
+}
+
+.reset-btn:hover {
+  background-color: #08c;
+  color: white;
+}
+
+.auto-btn {
+  background-color: #f0f;
+  color: #111;
+  box-shadow: 0 0 5px #f0f;
+}
+
+.auto-btn:hover {
+  background-color: #c0c;
+  color: white;
+}
+
+.back-btn {
+  background-color: #f0f;
+  color: #111;
+  box-shadow: 0 0 5px #f0f;
+}
+
+.back-btn:hover {
+  background-color: #c0c;
+  color: white;
+}
+
+/* ==================== */
+/* TITLE STYLES         */
+/* ==================== */
+.title {
+  color: #0ff;
+  text-align: center;
+  margin: 0 0 1rem 0;
+  text-shadow: 0 0 5px #0ff;
+}
+
+/* ==================== */
+/* RESPONSIVE ADJUSTMENTS */
+/* ==================== */
+@media (max-width: 768px) {
+  .app-container {
+      width: 100vw;
+      min-height: 100vh;
+      border-radius: 0;
+      padding: 0.5rem;
+  }
+  
+  button {
+      padding: 10px 12px;
+      font-size: 0.9rem;
+  }
+  
+  .reset-container {
+      gap: 8px;
+  }
+  
+  .queen-symbol {
+      width: 60%;
+      height: 60%;
+  }
+}

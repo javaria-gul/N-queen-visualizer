@@ -78,7 +78,7 @@ export default function Board({ size, onSwitchToAuto }) {
         </button>
       </div>
 
-
+      <div className="board-container">
       <div className="board-wrapper">
         <div
           className="board"
@@ -123,6 +123,7 @@ export default function Board({ size, onSwitchToAuto }) {
           )}
         </div>
       </div>
+    </div >
     </div >
   );
 }
