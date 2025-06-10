@@ -22,7 +22,7 @@
   #root {
     display: flex;
     flex-direction: column;
-    height: 90vh; /* Change from min-height to height */
+    height: 100vh; /* Change from min-height to height */
     width: 90vw; /* Add this for full viewport width */
     min-width: 320px;
     padding: 0; /* Change from 1rem to 0 for true full-screen */
