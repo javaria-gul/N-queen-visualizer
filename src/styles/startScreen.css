@@ -27,9 +27,13 @@
   }
   
   .start-card h1 {
-    font-size: 1.4rem;
-    margin-bottom: 0.8rem;
-    white-space: nowrap;
+    color: #0ff;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    white-space: normal; /* Allow wrap */
   }
   
   .start-card input[type="number"] {
@@ -87,15 +91,7 @@
     color: #eee;
   }
 
-  .start-card h1 {
-    color: #0ff;
-    margin-bottom: 1.5rem;
-    font-size: 1.8rem;
-    word-wrap: break-word;
-    overflow-wrap: break-word;
-    max-width: 100%;
-    white-space: normal; /* Allow wrap */
-  }
+  
   
   @media (max-width: 480px) {
     .start-card h1 {
