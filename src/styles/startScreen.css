@@ -86,4 +86,28 @@
     background-color: #c0c;
     color: #eee;
   }
+
+  .start-card h1 {
+    color: #0ff;
+    margin-bottom: 1.5rem;
+    font-size: 1.8rem;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    white-space: normal; /* Allow wrap */
+  }
+  
+  @media (max-width: 480px) {
+    .start-card h1 {
+      font-size: 1.3rem;
+      line-height: 1.4;
+      text-align: center;
+    }
+  
+    .start-card {
+      padding: 1.5rem;
+      width: 95%;
+    }
+  }
+  
   
